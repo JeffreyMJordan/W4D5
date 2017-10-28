@@ -1,6 +1,7 @@
+require 'bcrypt'
 class User < ApplicationRecord
-  validates :username, uniqueness: true
-  validates :username, :email, :password_digest, presence: true
+
+  validates :email, :password_digest, presence: true
   after_initialize :ensure_session_token
   attr_reader :password
 
@@ -32,10 +33,9 @@ class User < ApplicationRecord
   def self.create(params)
     user = User.new
     user.password = params[:password]
-    user.email = params[:username]
-    user.username = params[:username]
+    user.email = params[:email]
     user.save
-    user 
+    user
   end
 
 

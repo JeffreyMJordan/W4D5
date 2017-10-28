@@ -11,12 +11,14 @@ class UsersController < ApplicationController
       log_in!(@user)
       redirect_to root_url
     else
+      byebug
       flash.now[:errors] = @user.errors.full_messages
+      render :new
     end
   end
 
   private
   def user_params
-    params.require(:user).permite(:username, :email, :password)
+    params.require(:user).permit( :email, :password)
   end
 end
